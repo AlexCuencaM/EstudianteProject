@@ -9,11 +9,13 @@ namespace Estudiantes
     class Program
     {
         static List<Estudiante> clase = new List<Estudiante>();
+        static Promedio promedio;
         static string input(string label)
         {
             Console.WriteLine($"Ingrese {label}: ");
             return Console.ReadLine();
         }
+
         static void textMenu()
         {
             Console.WriteLine("Menu Principal");
@@ -21,7 +23,9 @@ namespace Estudiantes
             Console.WriteLine("2.-Eliminar Estudiante");
             Console.WriteLine("3.-Consultar Estudiante por CI");
             Console.WriteLine("4.-Consultar todo");
-            Console.WriteLine("5.-Salir");
+            Console.WriteLine("5.-Ingresar 4 notas");                        
+            Console.WriteLine("6.-Ver reporte");
+            Console.WriteLine("7.-Salir");
             Console.WriteLine("Ingrese una Opcion: ");
         }
         static void ingresar(List<Estudiante> clase)
@@ -37,10 +41,11 @@ namespace Estudiantes
             Console.WriteLine("Eliminar Estudiante");
             //Removera todos los estudiantes con la cedula ingresada,
             //por lo que la cedula debe ser unica
-            string ci = input("CI");            
+            string ci = input("CI");
             clase.RemoveAll(student => student.Ci.Equals(ci));
             finalOpcion();
-        }        
+        }
+
         static void consultarTodo(List<Estudiante> clase)
         {
             Console.WriteLine("Consultar Estudiantes");
@@ -59,6 +64,23 @@ namespace Estudiantes
             }
             finalOpcion();
         }
+
+        static void IngresarNotas(Estudiante e, out Promedio promedio)
+        {
+            
+            List<double> notas = new List<double>();
+            for(int i = 0; i < 4; i++)                          
+                notas.Add(Double.Parse(input($"Nota {i}")));            
+            promedio = new Promedio(e, notas);
+            finalOpcion();
+        }
+        static void reporte(Promedio p)
+        {
+            PromedioAltoBajo prom = new PromedioAltoBajo(p.Estudiante,p.Notas);
+            Console.WriteLine($"Nombre de alumno: {prom.Estudiante.Nombre}\nNota Más baja: {prom.notaMasBaja()}\nPromedio original: {p.promedio()}\n" +
+                $"Promedio sin la nota mas baja: {prom.promedio()}\nCondición del alumno: {prom.condicionEstudiante()}");
+            finalOpcion();
+        }
         private static void finalOpcion()
         {
             Console.ReadKey();
@@ -68,7 +90,6 @@ namespace Estudiantes
 
         static void menu()
         {            
-            
             textMenu();
             int switch_on = Int32.Parse(Console.ReadLine());
             switch (switch_on)
@@ -86,13 +107,18 @@ namespace Estudiantes
                     consultarTodo(clase);
                     break;
                 case 5:                    
-                    break;               
+                    IngresarNotas(clase.FirstOrDefault(),out promedio);
+                    break;
+                case 6:
+                    reporte(promedio);
+                    break;
+                case 7:
+                    break;
             }
-
-        }
+        }        
         static void Main(string[] args)
         {
-            menu();
+            menu();         
         }
     }
 }

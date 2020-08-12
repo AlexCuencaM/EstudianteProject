@@ -19,10 +19,7 @@ namespace Estudiantes
         static void textMenu()
         {
             Console.WriteLine("Menu Principal");
-            Console.WriteLine("1.-Ingresar Estudiante");
-            Console.WriteLine("2.-Eliminar Estudiante");
-            Console.WriteLine("3.-Consultar Estudiante por CI");
-            Console.WriteLine("4.-Consultar todo");
+            Console.WriteLine("1.-Ingresar Estudiante");            
             Console.WriteLine("5.-Ingresar 4 notas");                        
             Console.WriteLine("6.-Ver reporte");
             Console.WriteLine("7.-Salir");
@@ -35,36 +32,7 @@ namespace Estudiantes
             clase.Add(new Estudiante(input("nombre"),
                 input("apellido"), input("CI"), input("telefono")));
             finalOpcion();
-        }
-        static void eliminar(List<Estudiante> clase)
-        {
-            Console.WriteLine("Eliminar Estudiante");
-            //Removera todos los estudiantes con la cedula ingresada,
-            //por lo que la cedula debe ser unica
-            string ci = input("CI");
-            clase.RemoveAll(student => student.Ci.Equals(ci));
-            finalOpcion();
-        }
-
-        static void consultarTodo(List<Estudiante> clase)
-        {
-            Console.WriteLine("Consultar Estudiantes");
-            foreach (var estudiante in clase)     
-                Console.WriteLine(estudiante);
-            finalOpcion();
-        }
-        static void consultarPorCi(List<Estudiante> clase)
-        {
-            Console.WriteLine("Consultar Estudiantes");
-            string ci = input("CI");
-            foreach (var estudiante in clase)
-            {
-                if (estudiante.Ci.Equals(ci))
-                    Console.WriteLine(estudiante);
-            }
-            finalOpcion();
-        }
-
+        }        
         static void IngresarNotas(Estudiante e, out Promedio promedio)
         {
             
@@ -96,16 +64,7 @@ namespace Estudiantes
             {                
                 case 1:
                     ingresar(clase);
-                    break;
-                case 2:
-                    eliminar(clase);
-                    break;
-                case 3:
-                    consultarPorCi(clase);
-                    break;
-                case 4:
-                    consultarTodo(clase);
-                    break;
+                    break;                
                 case 5:                    
                     IngresarNotas(clase.FirstOrDefault(),out promedio);
                     break;

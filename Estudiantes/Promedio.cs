@@ -21,9 +21,8 @@ namespace Estudiantes
         }        
         public string condicionEstudiante()
         {
-
             return Notas.Average() < 3 ?  "Reprobado": (Notas.Average() > 3 && Notas.Average() <= 7 ? "Recuperacion": "Aprobado");
         }
-
+        
     }
 }
